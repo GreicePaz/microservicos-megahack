@@ -22,7 +22,7 @@ class AnaliseDeCredito(Resource):
         
         r = requests.get(url, headers=header)
         response = r.json()
-        return response
+        
         content = response.get('content', {})
 
         if response.get('code') != '000':
