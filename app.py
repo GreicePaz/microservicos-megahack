@@ -22,7 +22,7 @@ class AnaliseDeCredito(Resource):
         
         r = requests.get(url, headers=header)
         response = r.json()
-        
+        return response
         content = response.get('content', {})
 
         if response.get('code') != '000':
@@ -42,12 +42,12 @@ class AnaliseDeCredito(Resource):
                 grupo = 'E'
                 break
         
-        if not grupo:
-            score = content.get('score_serasa', {}).get('conteudo', {}).get('score', 0)
-            
-            score = 0
-            score = int(score)
+        score = content.get('score_serasa', {}).get('conteudo', {}).get('score', 0)
+        
+        score = 0
+        score = int(score)
 
+        if not grupo:
             if score <= 300:
                 grupo = 'D'
             elif score <= 500:
@@ -57,7 +57,7 @@ class AnaliseDeCredito(Resource):
             else:
                 grupo = 'A'
             
-        return {'cpf': cpf, 'grupo': grupo}, 200
+        return {'pontuacao': score, 'grupo': grupo, 'porcentagem': score/100 }, 200
 
 api.add_resource(AnaliseDeCredito, '/analisecredial/v1/')
 
