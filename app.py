@@ -38,7 +38,7 @@ class AnaliseDeCredito(Resource):
         content = response.get('content', {})
 
         #Se acabar de novo os créditos da API...
-        if response.get('code') == '002':
+        if response.get('code') in ['002','999']:
             content = {
                 'advertencias': {
                     'p': random.choice(list({0,1}))
